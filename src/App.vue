@@ -1,15 +1,25 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Header v-bind="headerParams"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header
+  },
+  data() {
+    return {
+      headerParams: {
+        variant: "1054",
+        group: "P3210",
+        firstName: "Danila",
+        lastName: "Lysenko"
+      }
+    }
   }
 }
 </script>
