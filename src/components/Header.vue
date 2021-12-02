@@ -1,6 +1,6 @@
 <template>
-    <header>
-        <p>Web4 - {{fullName}}, {{group}}, Вар.{{variant}}</p>
+    <header class="header-block">
+        <p class="header-text">Web4 - {{fullName}}, {{group}}, Вар.{{variant}}</p>
     </header>
 </template>
 
@@ -20,3 +20,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.header-block {
+    border-bottom: 1px solid;
+}
+
+.header-text {
+    text-align: center;
+}
+</style>
