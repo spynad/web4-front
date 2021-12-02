@@ -131,7 +131,10 @@
 
 <script>
 export default {
-    name: "Main"
+    name: "Main",
+    methods: {
+        
+    }
 }
 
 </script>
