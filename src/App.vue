@@ -1,17 +1,16 @@
-<template>
+<template>   
   <Header v-bind="headerParams"/>
-  <Main />
+  <router-view />
 </template>
 
 <script>
 import Header from './components/Header.vue'
-import Main from './views/Main.vue'
+//import Main from './views/Main.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Main
   },
   data() {
     return {
@@ -33,4 +32,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 </style>
