@@ -1,11 +1,10 @@
-<template>   
+<template> 
   <Header v-bind="headerParams"/>
   <router-view />
 </template>
 
 <script>
 import Header from './components/Header.vue'
-//import Main from './views/Main.vue'
 
 export default {
   name: 'App',

@@ -1,5 +1,5 @@
 <template>
-    <form class="main-form" name="main-form">
+    <div class="content content-width">
             <div class="graph">
                 <div class="graph__wrapper">
                     <svg class="main-form__svg" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" @click="sendPointFromSvg">
@@ -46,6 +46,7 @@
                     </svg>
                 </div>
             </div>
+            <form class="main-form" name="main-form">
             <h3 class="main-form__text text_x">Выберите изменение по X:</h3>
             <table>
                 <tr>
@@ -137,14 +138,15 @@
                     <td>Time</td>
                 </tr>
                 <tr v-for="point in points" :key="point">
-                    <td>{{point.x}}</td>
-                    <td>{{point.y}}</td>
+                    <td>{{point.x.toFixed(3)}}</td>
+                    <td>{{point.y.toFixed(3)}}</td>
                     <td>{{point.r}}</td>
                     <td>{{point.hitResult}}</td>
                     <td>0</td>
                 </tr>
             </table>
         </div>
+    </div>
 </template>
 
 <script>
@@ -173,50 +175,53 @@ export default {
             rectangle.setAttribute("y", -40 * value);
             rectangle.setAttribute("width", 20 * value);
             rectangle.setAttribute("height", 40 * value);
-            this.drawPoints();
         }
     },
     methods: {
         submitForm(event) {
             event.preventDefault();
-            this.axios.post("http://localhost:8081/points", {
-                x: this.x,
-                y: this.y,
-                r: this.r
-            },
-            {
-                headers: {"Authorization": "Bearer " + localStorage.getItem("jwtToken")}
-            }).then(() => {
-                this.getPoints();
-            }).catch(error => {
-                if (error.response.status == 401) {
-                    this.invalidateTokenAndGoToAuthPage();
-                }
-            })
+            const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+            if (userDetails) {
+                this.axios.post("http://localhost:8081/points", {
+                    x: this.x,
+                    y: this.y,
+                    r: this.r
+                },
+                {
+                    headers: {"Authorization": "Bearer " + userDetails.accessToken}
+                }).then(() => {
+                    this.getPoints();
+                }).catch(error => {
+                    if (error.response.status == 401 || error.response.status == 403) {
+                        this.invalidateTokenAndGoToAuthPage();
+                    }
+                })
+            } else this.invalidateTokenAndGoToAuthPage();
         },
         resetPoints(event) {
             event.preventDefault();
-            this.axios.delete("http://localhost:8081/points", 
+            this.axios.delete("http://localhost:8081/points/", 
             {
-                headers: {"Authorization": "Bearer " + localStorage.getItem("jwtToken")}
+                headers: {"Authorization": "Bearer " + JSON.parse(localStorage.getItem("userDetails")).accessToken}
             }).then(() => {
                 this.getPoints();
                 this.drawPoints();
             }).catch(error => {
-                if (error.response.status == 401) {
+                if (error.response.status == 401 || error.response.status == 403) {
                     this.invalidateTokenAndGoToAuthPage();
                 }
             })
         },
         getPoints() {
-            this.axios.get("http://localhost:8081/points", {
-                headers: {"Authorization": "Bearer " + localStorage.getItem("jwtToken")}
+            const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+            this.axios.get("http://localhost:8081/points/", {
+                headers: {"Authorization": "Bearer " + userDetails.accessToken}
             }).then(response => {
                 this.points = this.getPointsListFromResponse(response.data)
                 this.drawPoints();
             }).catch(error => {
                 alert(error.message);
-                if (error.response.status == 401) {
+                if (error.response.status == 401 || error.response.status == 403) {
                     this.invalidateTokenAndGoToAuthPage();
                 }
             })
@@ -231,7 +236,7 @@ export default {
             return pointsUnwraped;
         },
         invalidateTokenAndGoToAuthPage() {
-            localStorage.removeItem("jwtToken");
+            localStorage.removeItem("userDetails");
             this.$router.push({name: "auth"});
         },
         drawPoints() {
@@ -268,7 +273,7 @@ export default {
                 r: this.r
             },
             {
-                headers: {"Authorization": "Bearer " + localStorage.getItem("jwtToken")}
+                headers: {"Authorization": "Bearer " + JSON.parse(localStorage.getItem("userDetails")).accessToken}
             }).then(() => {
                 this.getPoints();
             }).catch(error => {
@@ -283,16 +288,26 @@ export default {
 </script>
 
 <style scoped>
-.graph {
+.content {
+    border: 1px solid #000;
+    margin: 5px auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 300px;
+    flex-direction: column;
 }
 
-.graph__wrapper {
+.content-width {
+    width: 80%;
+}
+
+.main-form {
     display: block;
+    padding: 5px 5px 5px 5px;
+}
+
+.graph {
+    float: right;
+    width: 300px;
+    height: 300px;
 }
 
 .graph__wrapper svg {
@@ -303,5 +318,43 @@ export default {
     font-size:9px;
     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-style: normal;
+}
+
+.result {
+    width: 80%;
+    border: 1px solid #000;
+    padding-left: 5px;
+    margin: 5px auto;
+}
+
+.result__table {
+    text-align: center;
+    width: 100%;
+}
+
+@media(max-width: 1186px) {
+    .graph {
+        width: 100%;
+    }
+
+    .graph__wrapper svg {
+        width: 100%;
+        height: 300px;
+        display: block;
+        margin: auto;
+    }
+    .content-width {
+        width: 100%;
+    }
+
+    .main-form {
+        margin: 0 auto;
+    }
+
+    .result {
+        width: 90%;
+        border: 1px solid #000;
+        margin: 5px auto;
+    }
 }
 </style>

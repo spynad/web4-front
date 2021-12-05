@@ -30,8 +30,7 @@ export default {
                 username: this.username,
                 password: this.password
             }).then(response => {
-                console.log(response.data.accessToken);
-                localStorage.setItem("jwtToken", response.data.accessToken);
+                localStorage.setItem("userDetails", JSON.stringify({userId: response.data.userId, accessToken: response.data.accessToken}));
                 this.$router.push({name: 'app'})
             }).catch(error => {
                 alert(error.response.data);
@@ -42,8 +41,7 @@ export default {
             this.axios.post("http://localhost:8081/user/register", {
                 username: this.username,
                 password: this.password
-            }).then(response => {
-                alert(response.data);
+            }).then(() => {
                 alert("Successful");
             }).catch(error => {
                 alert(error.response.data);
