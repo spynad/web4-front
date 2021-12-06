@@ -1,4 +1,4 @@
-<template> 
+// <template> 
   <Header v-bind="headerParams"/>
   <router-view />
 </template>
@@ -25,11 +25,24 @@ export default {
 </script>
 
 <style>
+@import url('http://fonts.googleapis.com/css?family=Roboto');
+
+body{
+    /* background-color: #564F6F; */
+    background-color: #FFFFFF;
+    /* color: whitesmoke; */
+    
+    /*margin-left: 20px;*/
+    /*margin-right: 30px;*/
+    /*width: auto;*/
+
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  /* color: #2c3e50; */
 }
 
 </style>

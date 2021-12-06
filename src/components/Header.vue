@@ -1,7 +1,12 @@
 <template>
-    <header class="header-block">
-        <p class="header-text">Web4 - {{fullName}}, {{group}}, Вар.{{variant}}</p>
-    </header>
+    <div class="main_header">
+        <div class="left_head">
+            <h1>{{fullName}}, {{group}}</h1>
+        </div>
+        <div class="right_head">
+            <h1>Var. №: {{variant}}</h1>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -22,11 +27,25 @@ export default {
 </script>
 
 <style scoped>
-.header-block {
-    border-bottom: 1px solid;
+
+.main_header{
+    background-color: #B79AE2;
+    overflow: hidden;
+    width: 100%;
 }
 
-.header-text {
-    text-align: center;
+.left_head{
+    width: 50%;
+    float: left;
+    padding: 1%;
+
 }
+
+.right_head{
+    width: 43%;
+    float: right;
+    text-align: right;
+    padding: 1%;
+}
+
 </style>
