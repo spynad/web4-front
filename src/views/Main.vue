@@ -246,7 +246,7 @@ export default {
             let pointsUnwraped = new Array();
             if (json._embedded !== undefined) {
                 for (let jsonObj of json._embedded.pointList) {
-                    pointsUnwraped.push((({ x, y, r, hitResult }) => ({ x, y, r, hitResult }))(jsonObj))
+                    pointsUnwraped.push((({ x, y, r, hitResult, time }) => ({ x, y, r, hitResult, time }))(jsonObj))
                 }
             }
             return pointsUnwraped;
