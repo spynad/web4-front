@@ -1,14 +1,18 @@
 <template>
     <div class="content">
         <form class="content__form">
-            <label> Логин введи
+            <div class="login">
+            <label>Enter username
                 <input type="text" required placeholder="Login" v-model.trim="username"/>
             </label>
-            <label> Пароль введи
-                <input type="text" required placeholder="Password" v-model.trim="password"/>
+            </div>
+            <div class="password">
+            <label>Enter password
+                <input type="password" required placeholder="Password" v-model.trim="password"/>
             </label>
-            <button label="Войти" @click="login">Войти</button>
-            <button label="Зарегаться" @click="register">Зарегаться</button>
+            </div>
+            <button label="Login" @click="login">Login</button>
+            <button label="Register" @click="register">Register</button>
         </form>
     </div>
 </template>
@@ -50,3 +54,23 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.content {
+    border: 5px solid #c5e29a;
+    background-color: #c5e29a;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.login {
+    margin: 5px 5px 5px 5px;
+}
+
+.password {
+    margin: 5px 5px 5px 5px;
+}
+</style>
