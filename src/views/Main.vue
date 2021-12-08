@@ -480,7 +480,7 @@ button:hover {
     width: calc(100% - 50%);
 }
 
-@media(min-width: 820px) {
+@media(max-width: 819px) {
     .graph{
         /*height: auto;*/
         /*width: auto;*/
@@ -488,10 +488,21 @@ button:hover {
         /*resize: both;*/
         /*position: -ms-device-fixed;*/
         /* max-width: 60% */
-        width: 300px;
-        height: 300px;
+        max-width: 200px;
+        max-height: 200px;
     }
 }
+
+.graph{
+        /*height: auto;*/
+        /*width: auto;*/
+        /*overflow: auto;*/
+        /*resize: both;*/
+        /*position: -ms-device-fixed;*/
+        /* max-width: 60% */
+        max-width: 300px;
+        max-height: 300px;
+    }
 
 .graph__inscription{
     font-size:9px;
