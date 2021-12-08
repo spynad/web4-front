@@ -122,6 +122,7 @@
                       <div class="buttons">
                           <button class="button-submit" type="submit" name="Submit" @click="submitForm">Submit</button>
                           <button class="button-reset" type="reset" name="Reset" @click="resetPoints">Reset</button>
+                          <button class="button-logout" name="logout" @click="logout">Logout</button>
                       </div>
                   </div>
           </div>
@@ -297,6 +298,11 @@ export default {
                     this.invalidateTokenAndGoToAuthPage();
                 }
             })
+        },
+        logout(event) {
+            event.preventDefault();
+            localStorage.removeItem("userDetails");
+            this.$router.push({name: "auth"});
         }
     }
 }
